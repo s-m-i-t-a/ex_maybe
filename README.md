@@ -7,7 +7,7 @@
 
 ```elixir
 @deps [
-  ex_maybe: "~> 0.1.0"
+  ex_maybe: "~> {:ex_maybe, "~> 1.0.0"}"
 ]
 ```
 

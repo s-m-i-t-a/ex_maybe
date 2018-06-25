@@ -6,9 +6,11 @@
 ## Installation
 
 ```elixir
-@deps [
-  ex_maybe: "~> {:ex_maybe, "~> 1.0.0"}"
-]
+def deps do
+  [
+    {:ex_maybe, "~> 1.0.1"}
+  ]
+end
 ```
 
 ## License

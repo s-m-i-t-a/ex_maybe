@@ -6,6 +6,7 @@ defmodule ExMaybe do
   """
 
   @type t(value) :: value | nil
+  @type result(error, value) :: {:error, error} | {:ok, value}
 
   @doc """
   Transform a Maybe value with a given function.
@@ -46,4 +47,19 @@ defmodule ExMaybe do
   def with_default(maybe, _default) do
     maybe
   end
+
+  @doc """
+  Convert *result* to *maybe.*
+
+  ## Examples
+
+      iex> ExMaybe.from_result({:ok, 10})
+      10
+
+      iex> ExMaybe.from_result({:error, "Error message!!!"})
+      nil
+  """
+  @spec from_result(result(any(), a)) :: t(a) when a: var
+  def from_result({:ok, value}), do: value
+  def from_result({:error, _}), do: nil
 end

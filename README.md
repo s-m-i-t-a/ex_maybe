@@ -8,7 +8,7 @@
 ```elixir
 def deps do
   [
-    {:ex_maybe, "~> 1.1.0"}
+    {:ex_maybe, "~> 1.1.1"}
   ]
 end
 ```

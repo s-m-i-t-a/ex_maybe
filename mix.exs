@@ -7,7 +7,7 @@ defmodule ExMaybe.MixProject do
       description:
         "This library fills a bunch of important niches. A Maybe can help you with optional arguments, error handling, and records with optional fields.",
       dialyzer: dialyzer_base() |> dialyzer_ptl(System.get_env("SEMAPHORE_CACHE_DIR")),
-      version: "1.0.1",
+      version: "1.1.0",
       elixir: "~> 1.6",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,

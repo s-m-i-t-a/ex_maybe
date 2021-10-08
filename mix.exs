@@ -6,7 +6,17 @@ defmodule ExMaybe.MixProject do
       app: :ex_maybe,
       description:
         "This library fills a bunch of important niches. A Maybe can help you with optional arguments, error handling, and records with optional fields.",
-      dialyzer: dialyzer_base() |> dialyzer_ptl(System.get_env("SEMAPHORE_CACHE_DIR")),
+      dialyzer: [
+        plt_file: {:no_warn, "priv/plts/dialyzer.plt"},
+        plt_add_apps: [:mix],
+        ignore_warnings: "dialyzer.ignore-warnings",
+        flags: [
+          :unmatched_returns,
+          :error_handling,
+          :race_conditions,
+          :no_opaque
+        ]
+      ],
       version: "1.1.1",
       elixir: "~> 1.6",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -38,9 +48,9 @@ defmodule ExMaybe.MixProject do
   defp deps do
     [
       {:ex_doc, "~> 0.20", only: :dev},
+      {:excoveralls, "~> 0.11", only: :test},
       {:credo, "~> 1.0", only: [:dev, :test]},
-      {:excoveralls, "~> 0.10", only: :test},
-      {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.1.0", only: [:dev, :test], runtime: false}
     ]
   end
 
@@ -54,44 +64,5 @@ defmodule ExMaybe.MixProject do
         "GitHub" => "https://github.com/s-m-i-t-a/ex_maybe"
       }
     ]
-  end
-
-  defp dialyzer_base() do
-    [plt_add_deps: :transitive]
-  end
-
-  defp dialyzer_ptl(base, nil) do
-    base
-  end
-
-  defp dialyzer_ptl(base, path) do
-    base ++
-      [
-        plt_core_path: path,
-        plt_file:
-          Path.join(
-            path,
-            "dialyxir_erlang-#{otp_vsn()}_elixir-#{System.version()}_deps-dev.plt"
-          )
-      ]
-  end
-
-  defp otp_vsn() do
-    major = :erlang.system_info(:otp_release) |> List.to_string()
-    vsn_file = Path.join([:code.root_dir(), "releases", major, "OTP_VERSION"])
-
-    try do
-      {:ok, contents} = File.read(vsn_file)
-      String.split(contents, "\n", trim: true)
-    else
-      [full] ->
-        full
-
-      _ ->
-        major
-    catch
-      :error, _ ->
-        major
-    end
   end
 end

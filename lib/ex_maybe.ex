@@ -53,13 +53,13 @@ defmodule ExMaybe do
 
   ## Examples
 
-      iex> ExMaybe.from_result({:ok, 10})
+      iex> ExMaybe.from({:ok, 10})
       10
 
-      iex> ExMaybe.from_result({:error, "Error message!!!"})
+      iex> ExMaybe.from({:error, "Error message!!!"})
       nil
   """
-  @spec from_result(result(any(), a)) :: t(a) when a: var
-  def from_result({:ok, value}), do: value
-  def from_result({:error, _}), do: nil
+  @spec from(result(any(), a)) :: t(a) when a: var
+  def from({:ok, value}), do: value
+  def from({:error, _}), do: nil
 end
